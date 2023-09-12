@@ -50,3 +50,8 @@ e = d.log()
 
 The `draw_dot(e)` function can be used on any `Scalar` of the computational graph for plotting the graph.
 
+
+## Acknowledgements
+This was created while I was learning AutoGrad in a lecture video by Andrej Karpathy.
+
+I intend to extend this furthermore by adding more functionalities, parallelizing computations and scaling the library to do more.

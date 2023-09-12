@@ -32,8 +32,9 @@ class Scalar:
     def __add__(self, other):
 
         other = other if isinstance(other, Scalar) else Scalar(
-            other, label='Constant')  # If constant, wrap it inside a Scalar object
-        out = Scalar(self.data + other.data, (self, other), '+', 'sum')
+            other, label='Const('+str(other)+')')  # If constant, wrap it inside a Scalar object
+        out = Scalar(self.data + other.data, (self, other),
+                     '+', self.label+'+'+other.label)
 
         def _backward():
             # Take out's grad and propagate it into self's and other's grad
@@ -59,8 +60,9 @@ class Scalar:
     def __mul__(self, other):
 
         other = other if isinstance(
-            other, Scalar) else Scalar(other, label='Constant')
-        out = Scalar(self.data * other.data, (self, other), '*', 'product')
+            other, Scalar) else Scalar(other, label='Const('+str(other)+')')
+        out = Scalar(self.data * other.data, (self, other),
+                     '*', self.label+'*'+other.label)
 
         def _backward():
             self.grad += (other.data) * out.grad
@@ -78,7 +80,7 @@ class Scalar:
 
         assert isinstance(other, (int, float)
                           ), "Only supporting int/float powers for now"
-        out = Scalar(self.data**other, (self, ), f'**{other}')
+        out = Scalar(self.data**other, (self, ), f'{self.label}**{other}')
 
         def _backward():
             self.grad = other * self.data**(other-1) * out.grad
@@ -90,9 +92,12 @@ class Scalar:
     def __truediv__(self, other):
         return self * other**-1
 
+    def __rtruediv__(self, other):
+        return other * self**-1
+
     def exp(self):
         x = self.data
-        out = Scalar(math.exp(x), (self, ), 'exp', 'exp')
+        out = Scalar(math.exp(x), (self, ), 'exp', 'exp('+self.label+')')
 
         def _backward():
             self.grad += out.data * out.grad
@@ -104,7 +109,7 @@ class Scalar:
     def log(self):  # Scalar(log(self.data))
         x = self.data
 
-        out = Scalar(math.log(x), (self, ), 'log', 'log')
+        out = Scalar(math.log(x), (self, ), 'log', 'log('+self.label+')')
 
         def _backward():
             self.grad = (1/x) * out.grad
@@ -119,7 +124,7 @@ class Scalar:
     def tanh(self):
         x = self.data
         t = (math.exp(2*x) - 1)/(math.exp(2*x) + 1)
-        out = Scalar(t, (self, ), 'tanh')
+        out = Scalar(t, (self, ), 'tanh', label='tanh('+self.label+')')
 
         def _backward():
             self.grad += (1 - t**2) * out.grad

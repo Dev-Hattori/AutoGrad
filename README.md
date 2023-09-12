@@ -7,6 +7,8 @@ Instead of *tensors* it works on *scalars* and implements **backpropagation** ov
 ## Stuff in it
 ### `Scalar`
 This is the main data-type that is used to to implement the computational graphs.
+
+[Example Notebook](https://github.com/Dev-Hattori/AutoGrad/blob/main/Example.ipynb)
 #### Example Usage
 
 ##### Initialization and Arithmetic Operations

@@ -50,6 +50,9 @@ e = d.log()
 
 The `draw_dot(e)` function can be used on any `Scalar` of the computational graph for plotting the graph.
 
+## [Neural-Nets](https://github.com/Dev-Hattori/AutoGrad/blob/main/MLP_Test.ipynb)
+Till now I've added the creation of a Multi-Layer Perceptron in the [example notebook](https://github.com/Dev-Hattori/AutoGrad/blob/main/MLP_Test.ipynb), but one can go even more granular using `AutoGrad.nn.Neuron` and `AutoGrad.nn.Layer`.
+
 
 ## Acknowledgements
 This was created while I was learning AutoGrad in a lecture video by Andrej Karpathy.
